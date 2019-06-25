@@ -53,10 +53,12 @@ public class EntityProtoChicken extends ChickenEntity
 	@Override 
     public boolean processInteract(PlayerEntity player, Hand hand)
 	    {
-//		if (IsInstanceOf(player,EntityPlayer.class))
-		 this.mountTo(player);
-		 super.processInteract(player, hand);
-		 return true;
+		if (player instanceof PlayerEntity) {
+			 this.mountTo(player);
+			 super.processInteract(player, hand);
+			 return true;
+			}
+		else return false;
 	    }
 	
 	 
@@ -70,23 +72,23 @@ public class EntityProtoChicken extends ChickenEntity
 	@Override
 	 public void updatePassenger(Entity passenger)
 	    {
+	        final float offset=0.4F;
 	        super.updatePassenger(passenger);
-	        float f = MathHelper.sin(this.renderYawOffset * 0.017453292F);
-	        float f1 = MathHelper.cos(this.renderYawOffset * 0.017453292F);
-	        passenger.setPosition(
-	        		this.posX + (double)(0.1F * f),
-	        		this.posY + (double)(this.getHeight() * 0.3F) + passenger.getYOffset() + 0.0D,
-	        		this.posZ - (double)(0.1F * f1)													);
+	        float xFactor = -MathHelper.sin(this.renderYawOffset * 0.017453292F);
+	        float zFactor = MathHelper.cos(this.renderYawOffset * 0.017453292F);
+	        passenger.setPosition( 
+	        		this.posX + (double)(offset * xFactor),
+	        		this.posY + (double)(this.getEyeHeight()  - passenger.getEyeHeight() + 0.0D),
+	        		this.posZ + (double)(offset * zFactor));
 	        if (passenger instanceof LivingEntity)	((LivingEntity)passenger).renderYawOffset = this.renderYawOffset;
 	    }
 
-	 
+	  
 
 	@Override
 	public void travel(Vec3d vec3d)
 	    {	
 	        if (this.isBeingRidden() && this.canBeSteered() )	{
-	        										//&& this.isHorseSaddled()
 	            LivingEntity controllingPassenger = (LivingEntity)this.getControllingPassenger();
 	            this.rotationYaw = controllingPassenger.rotationYaw;
 	            this.prevRotationYaw = this.rotationYaw;

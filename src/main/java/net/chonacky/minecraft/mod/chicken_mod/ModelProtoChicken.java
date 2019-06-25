@@ -24,12 +24,12 @@ public class ModelProtoChicken <T extends Entity> extends EntityModel<T>
     public ModelProtoChicken()
     {   	
 	   this.textureWidth = 132;
-	   this.textureHeight = 64;
+	   this.textureHeight = 78;
     
 	
-		this.head = new RendererModel(this, 0, 16);
-		this.head.addBox(-8.0F, -8.0F, -8.0F, 16, 8, 16, 5.0F); 
-		this.head.setRotationPoint(0.0F, -42.0F, 0.0F);
+		this.head = new RendererModel(this, 0, 40);
+		this.head.addBox(-12.0F, -6.0F, -12.0F, 24, 14, 24, 0.0F); 
+		this.head.setRotationPoint(0.0F, -51.0F, 0.0F);
 				
 		this.body = new RendererModel(this, 0, 0);
 		this.body.addBox(-16.0F, -16.0F, -16.0F, 32, 32, 32, 5.0F); 

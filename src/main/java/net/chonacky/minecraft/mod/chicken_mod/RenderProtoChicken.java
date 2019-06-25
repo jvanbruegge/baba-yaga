@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class RenderProtoChicken extends MobRenderer<EntityProtoChicken, ModelProtoChicken<EntityProtoChicken>>
 {
 
-	private static final ResourceLocation PROTOCHICKEN_TEXTURES = new ResourceLocation(ChickenMod.MODID,"textures/entity/byhut.png");
+	private static final ResourceLocation PROTOCHICKEN_TEXTURES = new ResourceLocation(ChickenMod.MODID,"textures/entity/byhut_v2.png");
 
     public RenderProtoChicken(EntityRendererManager manager)
     {
