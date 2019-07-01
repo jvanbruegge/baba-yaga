@@ -8,6 +8,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
@@ -23,12 +27,28 @@ public class EntityProtoChicken extends ChickenEntity
 		this.stepHeight = 2.1F;
 	}
 	
-	   protected void registerAttributes() {
-		      super.registerAttributes();
-		      this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(4.0D);
-		      this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		   }	
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(64.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
+		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+	}	
  
+	@Override
+	protected void initEntityAI() {
+	      this.field_70714_bg.addTask(1, new SwimGoal(this));
+	      this.field_70714_bg.addTask(2, new LookRandomlyGoal(this));
+	      this.field_70714_bg.addTask(3, new MeleeAttackGoal(this, 2.0D, true));
+	      this.field_70714_bg.addTask(4, new WaterAvoidingRandomWalkingGoal(this, 1.8D)); 
+	      
+	      this.field_70715_bh.addTask(1, new EntityProtoChicken.HurtByTargetGoal(this));
+	     
+	      //TODO - search for PanicGoal from Task Stream and remove it
+	      	//1. Get stream<task> of tasks, convert to array
+	      	//2. Search array for instance of PanicGoal
+	      //this.field_70714_bg.removeTask();
+	}
 	   
 	@Override
 	public float getStandingEyeHeight(Pose pose, EntitySize size) {
@@ -126,4 +146,10 @@ public class EntityProtoChicken extends ChickenEntity
 	        return this.getPassengers().isEmpty() ? null : (Entity)this.getPassengers().get(0);
 	    }
 
+	static class HurtByTargetGoal extends net.minecraft.entity.ai.goal.HurtByTargetGoal {
+		public HurtByTargetGoal(EntityProtoChicken pChicken) {
+			super(pChicken);
+		}
+	}
+	
 }
