@@ -32,17 +32,17 @@ public class EntityProtoChicken extends ChickenEntity
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(64.0D);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
-		this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
 	}	
  
 	@Override
-	protected void initEntityAI() {
-	      this.field_70714_bg.addTask(1, new SwimGoal(this));
-	      this.field_70714_bg.addTask(2, new LookRandomlyGoal(this));
-	      this.field_70714_bg.addTask(3, new MeleeAttackGoal(this, 2.0D, true));
-	      this.field_70714_bg.addTask(4, new WaterAvoidingRandomWalkingGoal(this, 1.8D)); 
+	protected void registerGoals() {
+	      this.goalSelector.addGoal(1, new SwimGoal(this));
+	      this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
+	      this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 2.0D, true));
+	      this.goalSelector.addGoal(4, new WaterAvoidingRandomWalkingGoal(this, 1.8D)); 
 	      
-	      this.field_70715_bh.addTask(1, new EntityProtoChicken.HurtByTargetGoal(this));
+	      this.targetSelector.addGoal(1, new EntityProtoChicken.HurtByTargetGoal(this));
 	     
 	      //TODO - search for PanicGoal from Task Stream and remove it
 	      	//1. Get stream<task> of tasks, convert to array

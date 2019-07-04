@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[26,)" #mandatory (26 is current forge version)
+loaderVersion="[27,)" #mandatory (27 is current forge version for 1.14.3)
 issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 	modId="chicken_mod" #mandatory

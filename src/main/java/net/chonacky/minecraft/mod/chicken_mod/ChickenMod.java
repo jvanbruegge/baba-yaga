@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -78,18 +79,27 @@ public class ChickenMod
     	public static final Block test_block=null;
     	public static final Item test_item=null;
     	public static final EntityType<EntityProtoChicken> protochicken=null;
+    	public static final EntityType<EntityLaser> cannon_laser=null;
+		public static final Item uncharged_laser_cannon=null;
+		public static final Item laser_cannon=null;
+		
+		
     	
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
     			blockRegistryEvent.getRegistry().registerAll(
-    					new Block(Block.Properties.create(Material.IRON)).setRegistryName(ChickenMod.MODID,"test_block")); 
+    					new Block(Block.Properties.create(Material.IRON)).setRegistryName(MODID,"test_block")); 
         }
         
+        
+        //Register Items and BlockItems
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
         	itemRegistryEvent.getRegistry().registerAll(
         			(Item)new BlockItem(test_block,new Item.Properties().group(ITEMTAB)).setRegistryName(test_block.getRegistryName()),
-        			new Item(new Item.Properties().group(ITEMTAB)).setRegistryName(ChickenMod.MODID,"test_item")
+        			new Item(new Item.Properties().group(ITEMTAB)).setRegistryName(MODID,"test_item"),
+        			new Item (new Item.Properties().group(ITEMTAB)).setRegistryName(MODID,"uncharged_laser_cannon"),
+        			new ItemLaserCannon(new Item.Properties().group(ITEMTAB).maxDamage(ItemLaserCannon.maxDamage)).setRegistryName(MODID, "laser_cannon")
         			);
         }
         
@@ -99,7 +109,9 @@ public class ChickenMod
     		entityRegistryEvent.getRegistry().registerAll(		    	
     		    EntityType.Builder.create(EntityProtoChicken::new,EntityClassification.MISC).size(2.5F, 5.0F)
     		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60)
-    		    	.build("protochicken").setRegistryName(MODID, "protochicken")
+    		    	.build("protochicken").setRegistryName(MODID, "protochicken"),
+		    	EntityType.Builder.create(EntityLaser::new,EntityClassification.MISC).size(1,1)
+		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60).build("cannon_laser").setRegistryName(MODID,"cannon_laser")
     			);	
     	}
         
