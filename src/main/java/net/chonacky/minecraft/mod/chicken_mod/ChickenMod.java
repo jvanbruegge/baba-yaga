@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,6 +55,7 @@ public class ChickenMod
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	RenderingRegistry.registerEntityRenderingHandler(EntityProtoChicken.class,RenderProtoChicken :: new);
+    	RenderingRegistry.registerEntityRenderingHandler(EntityLaser.class,RenderLaser<EntityLaser> :: new);
     }
     
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -110,7 +110,7 @@ public class ChickenMod
     		    EntityType.Builder.create(EntityProtoChicken::new,EntityClassification.MISC).size(2.5F, 5.0F)
     		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60)
     		    	.build("protochicken").setRegistryName(MODID, "protochicken"),
-		    	EntityType.Builder.create(EntityLaser::new,EntityClassification.MISC).size(1,1)
+		    	EntityType.Builder.<EntityLaser>create(EntityLaser::new,EntityClassification.MISC).size(0.5F,1)
 		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60).build("cannon_laser").setRegistryName(MODID,"cannon_laser")
     			);	
     	}

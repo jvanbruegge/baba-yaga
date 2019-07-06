@@ -2,16 +2,18 @@ package net.chonacky.minecraft.mod.chicken_mod;
 
 
 
-import net.minecraft.item.Item;
-import net.minecraft.util.Hand;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+
+import net.minecraft.item.ArrowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.world.World;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 
 public class ItemLaserCannon extends Item  {
 	
@@ -28,14 +30,14 @@ public class ItemLaserCannon extends Item  {
 
 			if (!world.isRemote) {
 				player.sendMessage(new StringTextComponent("Damage: "+this.getDamage(stack)));
-				player.sendMessage(new StringTextComponent("MaxDamage: "+this.getMaxDamage(stack)));
 			}
 			if ((this.getDamage(stack)< maxDamage) ) {   //&& (!world.isRemote)
 					if (!world.isRemote) {
-						//EntityLaser laser = new EntityLaser(ChickenMod.RegistryEvents.cannon_laser,world);
-						ArrowEntity laser = new ArrowEntity(EntityType.ARROW,world);
-						world.addEntity(laser);
+						AbstractArrowEntity laser = new EntityLaser(world,player);
+						//ArrowItem arrowitem = (ArrowItem)Items.ARROW;
+						//AbstractArrowEntity laser = arrowitem.createArrow(world, stack, player);
 						laser.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 8.0F, 0.05F);
+						world.addEntity(laser);
 						} 
 					if (!player.isCreative()) {
 						stack.setDamage(this.getDamage(stack)+1); }	
