@@ -55,7 +55,7 @@ public class ChickenMod
 
     private void doClientStuff(final FMLClientSetupEvent event) {
     	RenderingRegistry.registerEntityRenderingHandler(EntityProtoChicken.class,RenderProtoChicken :: new);
-    	RenderingRegistry.registerEntityRenderingHandler(EntityLaser.class,RenderLaser<EntityLaser> :: new);
+    	RenderingRegistry.registerEntityRenderingHandler(EntityLaser.class,RenderLaser :: new);
     }
     
     private void enqueueIMC(final InterModEnqueueEvent event)

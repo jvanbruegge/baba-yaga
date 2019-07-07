@@ -2,6 +2,7 @@ package net.chonacky.minecraft.mod.chicken_mod;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -28,10 +29,18 @@ public class EntityLaser extends AbstractArrowEntity {
 	}
 
 
+	@Override
+	public void onCollideWithPlayer(PlayerEntity entityIn) {
+	//Do nothing because we don't want to now
+	//super.onCollideWithPlayer(entityIn);
+	}
+
 	public void tick() {
 	  super.tick();
       if (!this.world.isRemote) 
-    	  if (this.inGround && this.timeInGround != 0  && this.timeInGround >= 600) 
+    	  if (this.inGround && this.timeInGround != 0  && this.timeInGround >= 600) {
 	    		 this.world.setEntityState(this, (byte)0);
+	    		 this.remove();
+    	  }
 	}
 }
