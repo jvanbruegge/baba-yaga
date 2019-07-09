@@ -76,15 +76,16 @@ public class ChickenMod
     @ObjectHolder(ChickenMod.MODID)
     public static class RegistryEvents {
     	
+    	//Object Holders
     	public static final Block test_block=null;
     	public static final Item test_item=null;
-    	public static final EntityType<EntityProtoChicken> protochicken=null;
-    	public static final EntityType<EntityLaser> cannon_laser=null;
 		public static final Item uncharged_laser_cannon=null;
 		public static final Item laser_cannon=null;
-		
-		
-    	
+    	public static final EntityType<EntityProtoChicken> protochicken=null;
+    	public static final EntityType<EntityLaser> cannon_laser=null;
+
+				
+    	//Register Blocks
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
     			blockRegistryEvent.getRegistry().registerAll(
@@ -96,10 +97,14 @@ public class ChickenMod
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
         	itemRegistryEvent.getRegistry().registerAll(
-        			(Item)new BlockItem(test_block,new Item.Properties().group(ITEMTAB)).setRegistryName(test_block.getRegistryName()),
-        			new Item(new Item.Properties().group(ITEMTAB)).setRegistryName(MODID,"test_item"),
-        			new Item (new Item.Properties().group(ITEMTAB)).setRegistryName(MODID,"uncharged_laser_cannon"),
-        			new ItemLaserCannon(new Item.Properties().group(ITEMTAB).maxDamage(ItemLaserCannon.maxDamage)).setRegistryName(MODID, "laser_cannon")
+        			(Item)new BlockItem(test_block,new Item.Properties().group(ITEMTAB))
+        				.setRegistryName(test_block.getRegistryName()),
+        			new Item(new Item.Properties().group(ITEMTAB))
+        				.setRegistryName(MODID,"test_item"),
+        			new Item (new Item.Properties().group(ITEMTAB))
+        				.setRegistryName(MODID,"uncharged_laser_cannon"),
+        			new ItemLaserCannon(new Item.Properties().group(ITEMTAB).maxDamage(ItemLaserCannon.maxDamage))
+        				.setRegistryName(MODID, "laser_cannon")
         			);
         }
         
@@ -108,10 +113,17 @@ public class ChickenMod
     	public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {	
     		entityRegistryEvent.getRegistry().registerAll(		    	
     		    EntityType.Builder.create(EntityProtoChicken::new,EntityClassification.MISC).size(2.5F, 5.0F)
-    		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60)
-    		    	.build("protochicken").setRegistryName(MODID, "protochicken"),
+    		    	.setShouldReceiveVelocityUpdates(true)
+    		    	.setTrackingRange(24)
+    		    	.setUpdateInterval(60)
+    		    	.build("protochicken")
+    		    	.setRegistryName(MODID, "protochicken"),
 		    	EntityType.Builder.<EntityLaser>create(EntityLaser::new,EntityClassification.MISC).size(0.5F,1)
-		    	.setShouldReceiveVelocityUpdates(true).setTrackingRange(24).setUpdateInterval(60).build("cannon_laser").setRegistryName(MODID,"cannon_laser")
+		    		.setShouldReceiveVelocityUpdates(true)
+		    		.setTrackingRange(24)
+		    		.setUpdateInterval(60)
+		    		.build("cannon_laser")
+		    		.setRegistryName(MODID,"cannon_laser")
     			);	
     	}
         

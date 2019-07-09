@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -150,6 +151,11 @@ public class EntityProtoChicken extends ChickenEntity
 		public HurtByTargetGoal(EntityProtoChicken pChicken) {
 			super(pChicken);
 		}
+	}
+
+	@Override
+	public IPacket<?> createSpawnPacket() {
+		return super.createSpawnPacket();
 	}
 	
 }

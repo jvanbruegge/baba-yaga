@@ -1,37 +1,33 @@
 package net.chonacky.minecraft.mod.chicken_mod;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.world.World;
 
 public class EntityLaser extends AbstractArrowEntity {
 
 	public EntityLaser(EntityType<? extends EntityLaser> entityType, World world) {
 		super(entityType, world);
-		// TODO Auto-generated constructor stub
 	}
 
 	public EntityLaser(World worldIn, double x, double y, double z) {
-	      super(ChickenMod.RegistryEvents.cannon_laser, x, y, z, worldIn);
-	   }
-
-	public EntityLaser(World worldIn, LivingEntity shooter) {
-	      super(ChickenMod.RegistryEvents.cannon_laser, shooter, worldIn);
-	   }
-
-	@Override
-	protected ItemStack getArrowStack() {
-		// TODO Auto-generated method stub
-		return null;
+		super(ChickenMod.RegistryEvents.cannon_laser, x, y, z, worldIn);
 	}
 
+	public EntityLaser(World worldIn, LivingEntity shooter) {
+		super(ChickenMod.RegistryEvents.cannon_laser, shooter, worldIn);
+	}
+	
 
 	@Override
 	public void onCollideWithPlayer(PlayerEntity entityIn) {
-	//Do nothing because we don't want to now
+	//Do nothing because we don't want to until this works
 	//super.onCollideWithPlayer(entityIn);
 	}
 
@@ -42,5 +38,16 @@ public class EntityLaser extends AbstractArrowEntity {
 	    		 this.world.setEntityState(this, (byte)0);
 	    		 this.remove();
     	  }
+	}
+	
+	@Override
+	public IPacket<?> createSpawnPacket() {
+	      Entity entity = this.getShooter();
+	      return new SSpawnMyObjectPacket(this, entity == null ? 0 : entity.getEntityId());
+	}
+
+	protected ItemStack getArrowStack() {
+		// No Item Stack for this Entity
+		return null;
 	}
 }
