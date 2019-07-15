@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.world.World;
 
 public class EntityLaser extends AbstractArrowEntity {
@@ -42,8 +41,7 @@ public class EntityLaser extends AbstractArrowEntity {
 	
 	@Override
 	public IPacket<?> createSpawnPacket() {
-	      Entity entity = this.getShooter();
-	      return new SSpawnMyObjectPacket(this, entity == null ? 0 : entity.getEntityId());
+	      return super.createSpawnPacket(); 
 	}
 
 	protected ItemStack getArrowStack() {
