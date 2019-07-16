@@ -1,6 +1,5 @@
 package net.chonacky.minecraft.mod.chicken_mod;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,7 +40,7 @@ public class EntityLaser extends AbstractArrowEntity {
 	
 	@Override
 	public IPacket<?> createSpawnPacket() {
-	      return super.createSpawnPacket(); 
+	      return (IPacket<?>) new LaserSpawnPacket(this,this.getShooter()); 
 	}
 
 	protected ItemStack getArrowStack() {
