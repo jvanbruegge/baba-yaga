@@ -13,6 +13,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -51,6 +52,11 @@ public class ChickenMod
 	
     private void setup(final FMLCommonSetupEvent event)
     {	//  preinit code  
+    	
+    	DeferredWorkQueue.runLater(() -> {
+    		ChickenModPacketHandler.register();
+    	});
+    
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

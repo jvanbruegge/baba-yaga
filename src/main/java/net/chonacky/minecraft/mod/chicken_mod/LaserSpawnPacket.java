@@ -5,7 +5,7 @@ package net.chonacky.minecraft.mod.chicken_mod;
 
 import java.util.UUID;
 
-import com.google.common.base.Supplier;
+import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -21,10 +21,10 @@ import net.minecraftforge.fml.network.NetworkEvent;
  */
 public class LaserSpawnPacket {
 	
-	private double xPos,yPos,zPos;
-	private Vec3d velocity;
-	private int pitch,yaw, shooterId, entityId;
-	private UUID uuid;
+	private final double xPos,yPos,zPos;
+	private final Vec3d velocity;
+	private final int pitch,yaw, shooterId, entityId;
+	private final UUID uuid;
 	
 	
 	public LaserSpawnPacket ( double xPos, double yPos, double zPos, int pitch, int yaw,
@@ -71,21 +71,23 @@ public class LaserSpawnPacket {
 				buf.readInt(),buf.readInt(),buf.readUniqueId());
 	}
 	
-	
-	public static void handle(LaserSpawnPacket msg, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> {
-			if (msg.getClass() == LaserSpawnPacket.class) {
-				World world = Minecraft.getInstance().world;				
+	public static class Handler {
+		public static void handle(final LaserSpawnPacket msg, Supplier<NetworkEvent.Context> ctx) {
+			ctx.get().enqueueWork(() -> {
+				if (msg.getClass() == LaserSpawnPacket.class) {
+					World world = Minecraft.getInstance().world;				
 
-					AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
-					Entity shooter = world.getEntityByID(msg.shooterId);
-					if (shooter != null) {
-						((AbstractArrowEntity)entity).setShooter(shooter);
-					}
-				
-				ctx.get().setPacketHandled(true);
-			}
-		});
+						AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
+						Entity shooter = world.getEntityByID(msg.shooterId);
+						if (shooter != null) {
+							((AbstractArrowEntity)entity).setShooter(shooter);
+						}
+					world.addEntity(entity);
+					ctx.get().setPacketHandled(true);
+				}
+			});
+		}
 	}
+	
 	
 }

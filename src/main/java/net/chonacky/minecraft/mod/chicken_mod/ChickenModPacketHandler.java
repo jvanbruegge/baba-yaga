@@ -16,9 +16,8 @@ public final class ChickenModPacketHandler {
 		);	
 
 public static void register() {
-	HANDLER.registerMessage(channelid++, LaserSpawnPacket.class, LaserSpawnPacket::encode, LaserSpawnPacket::decode, LaserSpawnPacket::handle);
+	HANDLER.registerMessage(channelid++, LaserSpawnPacket.class, LaserSpawnPacket::encode, LaserSpawnPacket::decode, LaserSpawnPacket.Handler::handle);
 }
-	
 	
 	
 	
