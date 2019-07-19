@@ -45,6 +45,9 @@ public class EntityLaser extends AbstractArrowEntity {
 	
 	@Override
 	public IPacket<?> createSpawnPacket() {
+//		try {				//inserted delay for debugging so we don't get caught with a disabled cursor
+//			wait (1000);
+//		} catch (Exception e) {}
 	    ChickenModPacketHandler.HANDLER.send(PacketDistributor.TRACKING_CHUNK.with(()->thisWorld.getChunk(chunkCoordX, chunkCoordZ)), new LaserSpawnPacket(this,this.getShooter()));    		 
 	        return super.createSpawnPacket();
 	}

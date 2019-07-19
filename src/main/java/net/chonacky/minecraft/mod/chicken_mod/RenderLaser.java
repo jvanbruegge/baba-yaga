@@ -15,7 +15,7 @@ public class RenderLaser extends ArrowRenderer<EntityLaser> {
 
 
 	protected ResourceLocation getEntityTexture(EntityLaser entity) {
-		return new ResourceLocation(ChickenMod.MODID,"textures/entity/canon_laser.png");
+		return new ResourceLocation(ChickenMod.MODID,"textures/entity/cannon_laser.png");
 	}
 
 //	@Override

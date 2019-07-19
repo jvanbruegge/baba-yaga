@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.network.PacketBuffer;
@@ -75,14 +76,14 @@ public class LaserSpawnPacket {
 		public static void handle(final LaserSpawnPacket msg, Supplier<NetworkEvent.Context> ctx) {
 			ctx.get().enqueueWork(() -> {
 				if (msg.getClass() == LaserSpawnPacket.class) {
-					World world = Minecraft.getInstance().world;				
-
-						AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
-						Entity shooter = world.getEntityByID(msg.shooterId);
+					ClientWorld world = Minecraft.getInstance().world;				
+					AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
+					//entity.setEntityId(msg.entityId);
+					Entity shooter = world.getEntityByID(msg.shooterId);
 						if (shooter != null) {
 							((AbstractArrowEntity)entity).setShooter(shooter);
 						}
-					world.addEntity(entity);
+					world.addEntity(msg.shooterId,entity);
 					ctx.get().setPacketHandled(true);
 				}
 			});
