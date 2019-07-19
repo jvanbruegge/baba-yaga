@@ -14,6 +14,8 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -74,19 +76,22 @@ public class LaserSpawnPacket {
 	
 	public static class Handler {
 		public static void handle(final LaserSpawnPacket msg, Supplier<NetworkEvent.Context> ctx) {
-			ctx.get().enqueueWork(() -> {
-				if (msg.getClass() == LaserSpawnPacket.class) {
-					ClientWorld world = Minecraft.getInstance().world;				
-					AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
-					//entity.setEntityId(msg.entityId);
-					Entity shooter = world.getEntityByID(msg.shooterId);
-						if (shooter != null) {
-							((AbstractArrowEntity)entity).setShooter(shooter);
-						}
-					world.addEntity(msg.shooterId,entity);
-					ctx.get().setPacketHandled(true);
-				}
+			DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+				ctx.get().enqueueWork(() -> {
+					if (msg.getClass() == LaserSpawnPacket.class) {
+						ClientWorld world = Minecraft.getInstance().world;				
+						AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
+						//entity.setEntityId(msg.entityId);
+						Entity shooter = world.getEntityByID(msg.shooterId);
+							if (shooter != null) {
+								((AbstractArrowEntity)entity).setShooter(shooter);
+							}
+						world.addEntity(msg.shooterId,entity);
+						ctx.get().setPacketHandled(true);
+					}
+				});
 			});
+			
 		}
 	}
 	
