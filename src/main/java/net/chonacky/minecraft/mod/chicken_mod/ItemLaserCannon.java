@@ -23,6 +23,7 @@ public class ItemLaserCannon extends Item  {
 		if ((this.getDamage(stack)< maxDamage) ) {   
 				if (!world.isRemote) {
 					AbstractArrowEntity laser = new EntityLaser(world,player);
+					ChickenMod.LOGGER.debug("Lanunched laser on server.  EntityID:"+laser.getEntityId());
 					laser.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 8.0F, 0.05F);
 					world.addEntity(laser);
 					} 

@@ -79,20 +79,84 @@ public class LaserSpawnPacket {
 			DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 				ctx.get().enqueueWork(() -> {
 					if (msg.getClass() == LaserSpawnPacket.class) {
-						ClientWorld world = Minecraft.getInstance().world;				
-						AbstractArrowEntity entity = new EntityLaser(world,msg.xPos,msg.yPos,msg.zPos);
-						//entity.setEntityId(msg.entityId);
-						Entity shooter = world.getEntityByID(msg.shooterId);
-							if (shooter != null) {
-								((AbstractArrowEntity)entity).setShooter(shooter);
-							}
-						world.addEntity(msg.shooterId,entity);
+						ClientWork.FireLaser(msg);
 						ctx.get().setPacketHandled(true);
 					}
 				});
 			});
 			
 		}
+	}
+
+	/**
+	 * @return the xPos
+	 */
+	public double getxPos() {
+		return xPos;
+	}
+
+
+	/**
+	 * @return the yPos
+	 */
+	public double getyPos() {
+		return yPos;
+	}
+
+
+	/**
+	 * @return the zPos
+	 */
+	public double getzPos() {
+		return zPos;
+	}
+
+
+	/**
+	 * @return the velocity
+	 */
+	public Vec3d getVelocity() {
+		return velocity;
+	}
+
+
+	/**
+	 * @return the pitch
+	 */
+	public int getPitch() {
+		return pitch;
+	}
+
+
+	/**
+	 * @return the yaw
+	 */
+	public int getYaw() {
+		return yaw;
+	}
+
+
+	/**
+	 * @return the shooterId
+	 */
+	public int getShooterId() {
+		return shooterId;
+	}
+
+
+	/**
+	 * @return the entityId
+	 */
+	public int getEntityId() {
+		return entityId;
+	}
+
+
+	/**
+	 * @return the uuid
+	 */
+	public UUID getUuid() {
+		return uuid;
 	}
 	
 	
