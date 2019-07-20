@@ -37,9 +37,14 @@ public class EntityLaser extends AbstractArrowEntity {
 	public void tick() {
 	  super.tick();
       if (!this.world.isRemote) 
+    	  ChickenMod.LOGGER.debug("Laser on Server Side : " + this.getUniqueID().toString());
     	  if (this.inGround && this.timeInGround != 0  && this.timeInGround >= 600) {
 	    		 this.world.setEntityState(this, (byte)0);
 	    		 this.remove();
+	    		 
+    	  }
+    	  else {
+    		  ChickenMod.LOGGER.debug("Laser on Client Side : " + this.getUniqueID().toString());
     	  }
 	}
 	
