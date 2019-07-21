@@ -128,6 +128,7 @@ public class ChickenMod
 		    		.setShouldReceiveVelocityUpdates(true)
 		    		.setTrackingRange(24)
 		    		.setUpdateInterval(60)
+		    		.setCustomClientFactory((spawnEntity,world) -> new EntityLaser(world))
 		    		.build("cannon_laser")
 		    		.setRegistryName(MODID,"cannon_laser")
     			);	
