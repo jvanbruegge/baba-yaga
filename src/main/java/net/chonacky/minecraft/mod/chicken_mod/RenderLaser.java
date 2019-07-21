@@ -18,10 +18,11 @@ public class RenderLaser extends ArrowRenderer<EntityLaser> {
 		return new ResourceLocation(ChickenMod.MODID,"textures/entity/cannon_laser.png");
 	}
 
-//	@Override
-//	public void doRender(EntityLaser entity, double x, double y, double z, float entityYaw, float partialTicks) {
-//		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-//	}
+	@Override
+	public void doRender(EntityLaser entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+		ChickenMod.LOGGER.debug("Doing LaserRender  ID:"+ entity.getEntityId());
+	}
 	
 
 }

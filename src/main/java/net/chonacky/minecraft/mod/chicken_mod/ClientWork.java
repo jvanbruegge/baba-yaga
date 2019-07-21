@@ -19,18 +19,34 @@ public class ClientWork {
 
 	
 	public static boolean FireLaser(LaserSpawnPacket msg) {
-		ClientWorld world = Minecraft.getInstance().world;				
+		ClientWorld world = Minecraft.getInstance().world;		
+		//World world = Minecraft.getInstance().world;	
 		AbstractArrowEntity entity = new EntityLaser(world,msg.getxPos(),msg.getyPos(),msg.getzPos());
 		entity.setEntityId(msg.getEntityId());
 		entity.setUniqueId(msg.getUuid());
-		//entity.setEntityId(msg.entityId);
+
 		Entity shooter = world.getEntityByID(msg.getShooterId());
 			if (shooter != null) {
 				((AbstractArrowEntity)entity).setShooter(shooter);
 			}
 		world.addEntity(entity.getEntityId(),entity);
-		ChickenMod.LOGGER.debug("Laser launched on client.  ID:"+entity.getEntityId()+ "   Expect: "+msg.getEntityId());
-	
+		ChickenMod.LOGGER.debug("Laser launched on client.  ID:"+entity.getEntityId()+ "   Expect: "+msg.getEntityId());	
 		return true;
+	}
+
+	public static int GetEntityCount() {
+		ClientWorld world = Minecraft.getInstance().world;
+		int count = 0;
+		if (world.getAllEntities() != null) 
+		{
+			for ( Entity entity : world.getAllEntities()) 
+			{
+				   if (entity instanceof EntityLaser)   {
+					   count++;
+				   }
+			}
+		}
+		   
+		return count;
 	}
 }

@@ -37,15 +37,15 @@ public class EntityLaser extends AbstractArrowEntity {
 	public void tick() {
 	  super.tick();
       if (!this.world.isRemote) 
-    	  ChickenMod.LOGGER.debug("Laser on Server Side : " + this.getUniqueID().toString());
-    	  if (this.inGround && this.timeInGround != 0  && this.timeInGround >= 600) {
+      {
+    	  ChickenMod.LOGGER.debug("Laser on Server Side : " + this.getEntityId() + "  " + this.getUniqueID().toString());
+    	  if (this.inGround && this.timeInGround != 0  && this.timeInGround >= 600) 
+    	  {
 	    		 this.world.setEntityState(this, (byte)0);
 	    		 this.remove();
-	    		 
     	  }
-    	  else {
-    		  ChickenMod.LOGGER.debug("Laser on Client Side : " + this.getUniqueID().toString());
-    	  }
+      }else { ChickenMod.LOGGER.debug("Laser on Client Side : " + this.getEntityId() + "  " + this.getUniqueID().toString() 
+    				  + "   Count:" + ClientWork.GetEntityCount());	 }
 	}
 	
 	@Override
@@ -53,7 +53,8 @@ public class EntityLaser extends AbstractArrowEntity {
 //		try {				//inserted delay for debugging so we don't get caught with a disabled cursor
 //			wait (1000);
 //		} catch (Exception e) {}
-	    ChickenModPacketHandler.HANDLER.send(PacketDistributor.TRACKING_CHUNK.with(()->thisWorld.getChunk(chunkCoordX, chunkCoordZ)), new LaserSpawnPacket(this,this.getShooter()));    		 
+		LaserSpawnPacket packet = new LaserSpawnPacket(this,this.getShooter());
+	    ChickenModPacketHandler.HANDLER.send(PacketDistributor.TRACKING_CHUNK.with(()->thisWorld.getChunk(chunkCoordX, chunkCoordZ)), packet);    		 
 	        return super.createSpawnPacket();
 	}
 
